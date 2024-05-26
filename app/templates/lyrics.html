@@ -1,0 +1,83 @@
+{% extends "_layout.html" %}
+
+{% block title %}Lyrics{% endblock %}
+
+{% block head%}
+{{ super() }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="{{ url_for('static', filename='js/highlight.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/customize.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/download.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/lyrics.css') }}" />
+{% endblock %}
+
+{% block content %}
+<h1><a href="https://open.spotify.com/track/{{ song_id }}" target="_blank">{{ song.title }}</a> by {{ song.artist }}</h1>
+<div id="container">
+    <div id="lyrics">
+        {% for line in lyrics %}<span> {{line}} <br /></span>
+        {% endfor %}
+    </div>
+    <div id="formDiv">
+        <div id="svg-container">
+
+            <svg id="svg-card" width="685" height="141" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <defs>
+                    <clipPath id="imageClip">
+                        <rect x="34" y="34" width="73" height="73" rx="10" />
+                    </clipPath>
+                    <style type="text/css">
+                        p {
+                            margin-top: 0.5rem;
+                            margin-bottom: 1rem;
+                        }
+
+                        @font-face {
+                            font-family: "Sailec";
+                            src: url(/static/fonts/Sailec.woff2) format("woff2");
+                            font-weight: normal;
+                            font-style: normal;
+                        }
+
+                        @font-face {
+                            font-family: "Spotify";
+                            src: url(/static/fonts/Spotify.woff2) format("woff2");
+                            font-weight: normal;
+                            font-style: normal;
+                        }
+
+                        @font-face {
+                            font-family: "Grotesk";
+                            src: url(/static/fonts/Grotesk.woff2) format("woff2");
+                            font-weight: normal;
+                            font-style: normal;
+                        }
+                    </style>
+                </defs>
+
+                <rect id="background" width="685" height="100%" rx="33" fill="#000000" />
+                <image xlink:href="{{ song.image }}" width="73" height="73" x="34" y="34" clip-path="url(#imageClip)" />
+                <text fill="white" font-family="Grotesk" font-size="40" letter-spacing="0em">
+                    <tspan id="title" x="140" y="65">{{ song.title_no_feats }}</tspan>
+                </text>
+                <text fill="white" font-family="Spotify" font-size="22" letter-spacing="0em">
+                    <tspan x="140" y="105">{{ song.feats }}</tspan>
+                </text>
+                <foreignObject style="color: white; font-family: Sailec; font-size: 25px" id="lyricsContainer" x="34" y="115" width="617" height="100%">
+                    <div id="svg-lyrics" xmlns="http://www.w3.org/1999/xhtml">
+                    </div>
+                </foreignObject>
+            </svg>
+
+        </div>
+        <div class="color-picker">
+            <input type="color" id="colorPickerBG" oninput="updateBackgroundColor()" />
+        </div>
+        <div class="color-picker">
+            <input type="color" id="colorPickerText" oninput="updateTextColor()" value="#ffffff" />
+        </div>
+        <button onclick="downloadSVGasPNG()">Download Card as PNG</button>
+    </div>
+</div>
+{% endblock %}

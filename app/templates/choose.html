@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Songs</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+            display: flex;
+            /* Use flexbox layout */
+            align-items: center;
+            /* Center vertically */
+            width: 80%;
+            /* Set width of the card */
+            margin: 0 auto;
+            /* Center the card horizontally */
+            margin-bottom: 20px;
+            /* Add margin between cards */
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            width: 200px;
+            /* Set width of the cover */
+            height: auto;
+            /* Maintain aspect ratio */
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 1.25rem;
+            flex: 1;
+            /* Expand to fill remaining space */
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            /* Add margin below the title */
+        }
+
+        .card-text {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Songs</h1>
+        <div id="songs">
+            {% for id, song in songs.items() %}
+            <a href="./create?id={{ id }}" class="card-link">
+                <div class="card">
+                    <img src="{{ song.image }}" class="card-img-top" alt="{{ song.album.name }}">
+                    <div class="card-body ml-3">
+                        <h5 class="card-title">{{ song.title }}</h5>
+                        <p class="card-text">{{ song.artist }}</p>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

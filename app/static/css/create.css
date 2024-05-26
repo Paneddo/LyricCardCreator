@@ -1,0 +1,16 @@
+svg {
+    user-select: none;
+    pointer-events: none;
+}
+
+.color-picker {
+    display: inline-block;
+}
+
+.color-picker input[type="color"] {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+}

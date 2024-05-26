@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+[data-theme="dark"] {
+    --licorice: #220901ff;
+    --blood-red: #621708ff;
+    --penn-red: #941b0cff;
+    --rust: #bc3908ff;
+    --orange-web: #f6aa1cff;
+}
+
+a {
+    color: black;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: transparent;
+    text-align: center;
+}
