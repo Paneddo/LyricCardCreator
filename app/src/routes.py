@@ -11,9 +11,8 @@ SPOTIFY_TRACK_URL_PATTERN = r'^https?://open\.spotify\.com/track/(\w{22})\b'
 def root():
     search_query = request.args.get("query")
 
-    empty_query = search_query == ''
-    if search_query is None or empty_query:
-        return render_template("search.html", error=empty_query)
+    if not search_query:
+        return render_template("search.html", error=True)
 
     match = re.match(SPOTIFY_TRACK_URL_PATTERN, search_query)
     if match:
@@ -28,9 +27,8 @@ def root():
 
 @main.route("/create", methods=['GET'], strict_slashes=False)
 def create():
-
     song_id = request.args.get("id", "").strip()
-    if song_id == '':
+    if not song_id:
         return redirect('/')
 
     r.hincrby('song_search_counts', song_id, 1)
@@ -40,8 +38,8 @@ def create():
     except KeyError:
         song = spotify.get_song_by_id(song_id)
 
-    l = spotify.get_lyrics(song_id)
-    if l is None:
+    lyrics = spotify.get_lyrics(song_id)
+    if lyrics is None:
         return 'Error'
 
-    return render_template('lyrics.html', lyrics=l, song=song, song_id=song_id)
+    return render_template('lyrics.html', lyrics=lyrics, song=song, song_id=song_id)

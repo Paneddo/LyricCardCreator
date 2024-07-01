@@ -75,9 +75,11 @@ async function downloadSVGasPNG() {
         const dataUrl = canvas.toDataURL('image/png');
 
         const dlLink = document.createElement('a');
-        dlLink.download = document
+
+        const filename = document
             .getElementById('title')
             .textContent.toLowerCase();
+        dlLink.download = filename.replace(/[^a-zA-Z0-9]/g, '');
         dlLink.href = dataUrl;
         dlLink.dataset.downloadurl = [
             'image/png',
