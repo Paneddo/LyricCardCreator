@@ -10,6 +10,6 @@ load_dotenv()
 
 main = Blueprint('main', __name__)
 spotify = SpotifyAPI(os.environ.get('SPOTIFY_CLIENT_ID'), os.environ.get('SPOTIFY_CLIENT_SECRET'))
-r = redis.Redis(host=os.environ.get('REDIS_HOST'), port=16904, password=os.environ.get('REDIS_PASSWORD'))
+r = redis.Redis(host=os.environ.get('REDIS_HOST'), port=6379, password=os.environ.get('REDIS_PASSWORD'))
 
 from . import routes
