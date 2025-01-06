@@ -2,6 +2,13 @@ const colorThief = new ColorThief();
 const colorPickerBackground = $('#colorPickerBG');
 const colorPickerText = $('#colorPickerText');
 
+function resetColors() {
+    colorPickerBackground.val(backGroundColor);
+    colorPickerText.val(textColor);
+    updateBackgroundColor();
+    updateTextColor();
+}
+
 function updateBackgroundColor() {
     var color = colorPickerBackground.val();
     $('#background').css({ fill: color });
@@ -14,7 +21,7 @@ function updateTextColor() {
     $('#lyricsContainer').css({ color: color });
 }
 
-function updateColors() {
+function initializeColors() {
     const img = new Image();
     img.src = localStorage.getItem('imgB64');
     img.onload = () => {
@@ -23,10 +30,10 @@ function updateColors() {
         g = rgb[1];
         b = rgb[2];
 
-        colorPickerBackground.val(`#${toHex(r)}${toHex(g)}${toHex(b)}`);
-        colorPickerText.val(
-            `#${toHex(255 - r)}${toHex(255 - g)}${toHex(255 - b)}`
-        );
+        backGroundColor = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+        textColor = `#${toHex(255 - r)}${toHex(255 - g)}${toHex(255 - b)}`;
+        colorPickerBackground.val(backGroundColor);
+        colorPickerText.val(textColor);
         updateBackgroundColor();
         updateTextColor();
     };
@@ -35,3 +42,7 @@ function updateColors() {
 function toHex(n) {
     return n.toString(16).padStart(2, '0');
 }
+
+$(document).ready(async () => {
+    initializeColors();
+});

@@ -2,7 +2,7 @@ import re
 
 from flask import redirect, render_template, request, session
 
-from . import main, r, spotify
+from . import main, spotify
 
 SPOTIFY_TRACK_URL_PATTERN = r'^https?://open\.spotify\.com/track/(\w{22})\b'
 
@@ -30,9 +30,6 @@ def create():
     song_id = request.args.get("id", "").strip()
     if not song_id:
         return redirect('/')
-
-    r.hincrby('song_search_counts', song_id, 1)
-
     try:
         song = session['songs'][song_id]
     except KeyError:

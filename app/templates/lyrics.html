@@ -75,9 +75,10 @@
             <input type="color" id="colorPickerBG" oninput="updateBackgroundColor()" />
         </div>
         <div class="color-picker">
-            <input type="color" id="colorPickerText" oninput="updateTextColor()" value="#ffffff" />
+            <input type="color" id="colorPickerText" oninput="updateTextColor()" />
         </div>
-        <button onclick="downloadSVGasPNG()">Download Card as PNG</button>
+        <button onclick="resetColors()"">Reset</button>
+        <button onclick=" downloadSVGasPNG()">Download Card as PNG</button>
     </div>
 </div>
 {% endblock %}
