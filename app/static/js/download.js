@@ -54,7 +54,9 @@ async function imageToBase64(url) {
 
 async function downloadSVGasPNG() {
     let svgCard = await replaceFont($('#svg-card').clone());
-    svgCard.find('image').attr('xlink:href', localStorage.getItem('imgB64'));
+    const imageSrc = $('#svg-card').find('image').attr('xlink:href');
+
+    svgCard.find('image').attr('xlink:href', await imageToBase64(imageSrc));
     const svgStr = new XMLSerializer().serializeToString(svgCard[0]);
     console.log(svgStr);
     const svgData = `data:image/svg+xml;charset=utf8,${encodeURIComponent(
@@ -79,7 +81,7 @@ async function downloadSVGasPNG() {
         const filename = document
             .getElementById('title')
             .textContent.toLowerCase();
-        dlLink.download = filename.replace(/[^a-zA-Z0-9]/g, '');
+        dlLink.download = filename.replace(/[^a-zA-Z0-9]/g, '') + '_card';
         dlLink.href = dataUrl;
         dlLink.dataset.downloadurl = [
             'image/png',
@@ -92,11 +94,3 @@ async function downloadSVGasPNG() {
         document.body.removeChild(dlLink);
     };
 }
-
-$(document).ready(async () => {
-    const imageSrc = $('#svg-card').find('image').attr('xlink:href');
-
-    const b64 = await imageToBase64(imageSrc);
-    localStorage.setItem('imgB64', b64);
-    updateColors();
-});
