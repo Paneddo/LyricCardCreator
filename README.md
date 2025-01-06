@@ -18,6 +18,7 @@ Feel free to fork the repository, submit issues, and create pull requests.
 
 ## 🛠️ TODO
 
+-   [ ] Fix Lyrics Scrolling
 -   [ ] Card Shadow
 -   [ ] Redis Integration
 
